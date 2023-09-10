@@ -12,19 +12,41 @@
             </span>
         </button>
 
-        <!-- nav de connexion et inscription -->
-        <nav className="header__mobile-menu-user-links">
-            <li>
-                <button class="link--dia link">
-                    <User /> Inscription
-                </button>
-            </li>
-            <li>
-                <button class="link--dia link">
-                    <Key /> Connexion
-                </button>
-            </li>
+        <!-- Logo garden todo -->
+        <div className="header__logo">
+            <router-link to="/">
+                <img className="header__logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
+                    title="GardenTodo" />
+            </router-link>
+        </div>
+
+        <!-- Nav login desktop -->
+        <nav className="desktop-menu-user-links">
+            <button className="link--dia link">
+                <User /> Inscription
+            </button>
+
+            <button className="link--dia link">
+                <Key /> Connexion
+            </button>
         </nav>
+
+        <!-- Navigation principale desktop -->
+        <nav className="desktop-menu">
+            <router-link to="/" relative="path" className="link--io link">
+                Accueil
+            </router-link>
+            <router-link to="/plantes" relative="path" className="link--io link">
+                Liste des plantes
+            </router-link>
+            <router-link to="/mon-espace-vert" relative="path" className="link--io link">
+                Mon espace vert
+            </router-link>
+            <router-link to="/a-propos" relative="path" className="link--io link">
+                À propos
+            </router-link>
+        </nav>
+
     </header>
 </template>
 
