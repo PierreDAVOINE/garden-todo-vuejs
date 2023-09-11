@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useInterfaceStore } from '../stores/interface';
 
+const interfaceState = useInterfaceStore();
 
 </script>
 
@@ -9,21 +11,21 @@
         <!-- Fenêtre fond blanc -->
         <div class="login-modal__window">
             <!-- Bouton de femeture de la modale -->
-            <button class="login-modal__close">
+            <button class="login-modal__close" @click="interfaceState.switchModal">
                 <v-icon name="io-close" />
             </button>
 
             <img src="/src/assets/gardentodo-logo1.png" alt="Gardern to do logo" />
-            <h2>Connexion</h2>
+            <h2>{{ interfaceState.isSignUp ? 'Connexion' : 'Inscription' }}</h2>
             <p>
                 Connectez-vous afin d'accéder à votre jardin
             </p>
 
             <!-- Switch pour passer de la modale "inscription" à la modale "connexion" et inversement -->
             <p>
-                Pas encore inscrit ?
-                <button class="login-modal__link">
-                    S'inscrire
+                {{ interfaceState.isSignUp ? 'Pas encore inscrit ?' : 'Déjà inscrit ?' }}
+                <button class="login-modal__link" @click="interfaceState.switchIsSignUp">
+                    {{ interfaceState.isSignUp ? "S'inscrire" : 'Se connecter' }}
                 </button>
             </p>
 

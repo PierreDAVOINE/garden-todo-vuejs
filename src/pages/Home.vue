@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import { useInterfaceStore } from '../stores/interface';
 
+const interfaceState = useInterfaceStore();
 
+const setModalIsOpen = (isSignUp: boolean) => {
+    interfaceState.switchModal();
+    interfaceState.setIsSignUp(isSignUp);
+}
 </script>
 
 <template>
@@ -22,10 +28,10 @@
                     seront ajoutées très bientôt, n'hésitez pas à repasser nous voir !
                 </p>
                 <div className="about__button-wrap">
-                    <button>
+                    <button @click="setModalIsOpen(false)">
                         S'inscrire
                     </button>
-                    <button>
+                    <button @click="setModalIsOpen(true)">
                         Se connecter
                     </button>
                 </div>

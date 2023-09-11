@@ -5,6 +5,11 @@ import { useInterfaceStore } from '../stores/interface';
 const user = useUserStore();
 const interfaceState = useInterfaceStore();
 
+const setModalIsOpen = (isSignUp: boolean) => {
+    interfaceState.switchModal();
+    interfaceState.setIsSignUp(isSignUp);
+}
+
 </script>
 
 <template>
@@ -16,7 +21,7 @@ const interfaceState = useInterfaceStore();
         <!-- mobile burger button -->
         <button aria-label="Mobile menu" class="hamburger hamburger--3dxy" :class="{
             isActive: interfaceState.menuIsOpen
-        }" type="button" title="Menu mobile" @click="interfaceState.switch">
+        }" type="button" title="Menu mobile" @click="interfaceState.switchMenu">
             <span class="hamburger-box">
                 <span class="hamburger-inner"></span>
             </span>
@@ -92,11 +97,11 @@ const interfaceState = useInterfaceStore();
 
         <!-- Nav login desktop -->
         <nav v-if="!user.isLogged" class="desktop-menu-user-links">
-            <button class="link--dia link">
+            <button class="link--dia link" @click="setModalIsOpen(false)">
                 <v-icon name="co-user" />Inscription
             </button>
 
-            <button class="link--dia link">
+            <button class="link--dia link" @click="setModalIsOpen(true)">
                 <v-icon name="bi-key" />Connexion
             </button>
         </nav>
