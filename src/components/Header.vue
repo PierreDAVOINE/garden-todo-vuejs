@@ -1,30 +1,58 @@
 <script setup lang="ts">
 import { useUserStore } from '../stores/user';
+import { useInterfaceStore } from '../stores/interface';
 
-const user = useUserStore()
+const user = useUserStore();
+const interfaceState = useInterfaceStore();
 
 </script>
 
 <template>
     <header class="header">
-        <!-- Logo garden todo -->
+        <!-- ==============================-->
+        <!-- ========= MENU MOBILE ======== -->
+        <!-- ==============================-->
+
+        <!-- mobile burger button -->
+        <button aria-label="Mobile menu" class="hamburger hamburger--3dxy" :class="{
+            isActive: interfaceState.menuIsOpen
+        }" type="button" title="Menu mobile" @click="interfaceState.switch">
+            <span className="hamburger-box">
+                <span className="hamburger-inner"></span>
+            </span>
+        </button>
+
+        <!-- mobile menu -->
+        <div v-if="interfaceState.menuIsOpen" className="header__mobile-link-nav">
+            <img className="header__mobile-link-nav-logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
+                title="GardenTodo" />
+            <nav className="header__mobile-link-nav-main">
+                <router-link to="/" relative="path" className="link--io link">
+                    Accueil
+                </router-link>
+                <router-link to="/plantes" relative="path" className="link--io link">
+                    Liste des plantes
+                </router-link>
+                <router-link to="/mon-espace-vert" relative="path" className="link--io link">
+                    Mon espace vert
+                </router-link>
+                <router-link to="/a-propos" relative="path" className="link--io link">
+                    À propos
+                </router-link>
+            </nav>
+        </div>
+
+
+        <!-- ======================== -->
+        <!-- === Logo Garden todo === -->
+        <!-- ======================== -->
+
         <div className="header__logo">
             <router-link to="/">
                 <img className="header__logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
                     title="GardenTodo" />
             </router-link>
         </div>
-
-        <!-- ==============================-->
-        <!-- ========= MENU MOBILE ======== -->
-        <!-- ==============================-->
-
-        <!-- mobile burger button -->
-        <button aria-label="Mobile menu" class="hamburger hamburger--3dxy" type="button" title="Menu mobile">
-            <span className="hamburger-box">
-                <span className="hamburger-inner"></span>
-            </span>
-        </button>
 
         <!-- ================================-->
         <!-- ========= MENU DESKTOP ========= -->
@@ -210,7 +238,7 @@ header li {
     overflow: visible;
 }
 
-.hamburger.is-active {
+.hamburger.isActive {
     transform: translateX(82vw);
 
     @media screen and (min-width: 550px) {
@@ -222,13 +250,13 @@ header li {
     opacity: 0.7;
 }
 
-.hamburger.is-active:hover {
+.hamburger.isActive:hover {
     opacity: 0.7;
 }
 
-.hamburger.is-active .hamburger-inner,
-.hamburger.is-active .hamburger-inner::before,
-.hamburger.is-active .hamburger-inner::after {
+.hamburger.isActive .hamburger-inner,
+.hamburger.isActive .hamburger-inner::before,
+.hamburger.isActive .hamburger-inner::after {
     background-color: #000;
 }
 
@@ -288,16 +316,16 @@ header li {
     transition: transform 0s 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.hamburger--3dxy.is-active .hamburger-inner {
+.hamburger--3dxy.isActive .hamburger-inner {
     background-color: transparent !important;
     transform: rotateX(180deg) rotateY(180deg);
 }
 
-.hamburger--3dxy.is-active .hamburger-inner::before {
+.hamburger--3dxy.isActive .hamburger-inner::before {
     transform: translate3d(0, 10px, 0) rotate(45deg);
 }
 
-.hamburger--3dxy.is-active .hamburger-inner::after {
+.hamburger--3dxy.isActive .hamburger-inner::after {
     transform: translate3d(0, -10px, 0) rotate(-45deg);
 }
 
