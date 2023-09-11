@@ -2,10 +2,12 @@
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Pages from './pages/Index.vue'
+import LoginModal from './components/LoginModal.vue';
 
 </script>
 
 <template>
+    <LoginModal />
     <Header />
     <Pages />
     <Footer />

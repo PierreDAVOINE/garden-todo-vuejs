@@ -17,26 +17,26 @@ const interfaceState = useInterfaceStore();
         <button aria-label="Mobile menu" class="hamburger hamburger--3dxy" :class="{
             isActive: interfaceState.menuIsOpen
         }" type="button" title="Menu mobile" @click="interfaceState.switch">
-            <span className="hamburger-box">
-                <span className="hamburger-inner"></span>
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
             </span>
         </button>
 
         <!-- mobile menu -->
-        <div v-if="interfaceState.menuIsOpen" className="header__mobile-link-nav">
-            <img className="header__mobile-link-nav-logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
+        <div v-if="interfaceState.menuIsOpen" class="header__mobile-link-nav">
+            <img class="header__mobile-link-nav-logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
                 title="GardenTodo" />
-            <nav className="header__mobile-link-nav-main">
-                <router-link to="/" relative="path" className="link--io link">
+            <nav class="header__mobile-link-nav-main">
+                <router-link to="/" relative="path" class="link--io link">
                     Accueil
                 </router-link>
-                <router-link to="/plantes" relative="path" className="link--io link">
+                <router-link to="/plantes" relative="path" class="link--io link">
                     Liste des plantes
                 </router-link>
-                <router-link to="/mon-espace-vert" relative="path" className="link--io link">
+                <router-link to="/mon-espace-vert" relative="path" class="link--io link">
                     Mon espace vert
                 </router-link>
-                <router-link to="/a-propos" relative="path" className="link--io link">
+                <router-link to="/a-propos" relative="path" class="link--io link">
                     À propos
                 </router-link>
             </nav>
@@ -58,7 +58,7 @@ const interfaceState = useInterfaceStore();
 
 
             <!-- A l'inverse, si l'utilisateur est connecté on lui propose d'accéder à ses informations personnelles ou de se déconnecter -->
-            <nav v-else className="header__mobile-menu-user-links">
+            <nav v-else class="header__mobile-menu-user-links">
                 <li>
                     {/* On laisse un link ici car "mon compte" et une page et il faudra une url */}
                     <router-link to="/mon-compte" relative="path" class="link--dia link">
@@ -66,7 +66,7 @@ const interfaceState = useInterfaceStore();
                     </router-link>
                 </li>
                 <li>
-                    <button className="link--dia link">
+                    <button class="link--dia link">
                         Déconnexion
                     </button>
                 </li>
@@ -79,9 +79,9 @@ const interfaceState = useInterfaceStore();
         <!-- === Logo Garden todo === -->
         <!-- ======================== -->
 
-        <div className="header__logo">
+        <div class="header__logo">
             <router-link to="/">
-                <img className="header__logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
+                <img class="header__logo-img" src="../assets/gardentodo-logo1.png" alt="Garden to do logo"
                     title="GardenTodo" />
             </router-link>
         </div>
@@ -91,37 +91,37 @@ const interfaceState = useInterfaceStore();
         <!-- ================================ -->
 
         <!-- Nav login desktop -->
-        <nav v-if="!user.isLogged" className="desktop-menu-user-links">
-            <button className="link--dia link">
+        <nav v-if="!user.isLogged" class="desktop-menu-user-links">
+            <button class="link--dia link">
                 <v-icon name="co-user" />Inscription
             </button>
 
-            <button className="link--dia link">
+            <button class="link--dia link">
                 <v-icon name="bi-key" />Connexion
             </button>
         </nav>
 
-        <nav v-else className="desktop-menu-user-links">
+        <nav v-else class="desktop-menu-user-links">
             <router-link to="/mon-compte" relative="path" className="link--dia link">
                 <v-icon name="co-user" /> Mon compte
             </router-link>
-            <button className="link--dia link">
+            <button class="link--dia link">
                 <v-icon name="co-user" /> Déconnexion
             </button>
         </nav>
 
         <!-- Navigation principale desktop -->
-        <nav className="desktop-menu">
-            <router-link to="/" relative="path" className="link--io link">
+        <nav class="desktop-menu">
+            <router-link to="/" relative="path" class="link--io link">
                 Accueil
             </router-link>
-            <router-link to="/plantes" relative="path" className="link--io link">
+            <router-link to="/plantes" relative="path" class="link--io link">
                 Liste des plantes
             </router-link>
-            <router-link to="/mon-espace-vert" relative="path" className="link--io link">
+            <router-link to="/mon-espace-vert" relative="path" class="link--io link">
                 Mon espace vert
             </router-link>
-            <router-link to="/a-propos" relative="path" className="link--io link">
+            <router-link to="/a-propos" relative="path" class="link--io link">
                 À propos
             </router-link>
         </nav>
