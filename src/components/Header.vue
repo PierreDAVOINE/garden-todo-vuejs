@@ -1,17 +1,12 @@
 <script setup lang="ts">
+import { useUserStore } from '../stores/user';
 
+const user = useUserStore()
 
 </script>
 
 <template>
     <header class="header">
-        <!-- mobile burger button -->
-        <button aria-label="Mobile menu" class="hamburger hamburger--3dxy" type="button" title="Menu mobile">
-            <span className="hamburger-box">
-                <span className="hamburger-inner"></span>
-            </span>
-        </button>
-
         <!-- Logo garden todo -->
         <div className="header__logo">
             <router-link to="/">
@@ -20,14 +15,38 @@
             </router-link>
         </div>
 
+        <!-- ==============================-->
+        <!-- ========= MENU MOBILE ======== -->
+        <!-- ==============================-->
+
+        <!-- mobile burger button -->
+        <button aria-label="Mobile menu" class="hamburger hamburger--3dxy" type="button" title="Menu mobile">
+            <span className="hamburger-box">
+                <span className="hamburger-inner"></span>
+            </span>
+        </button>
+
+        <!-- ================================-->
+        <!-- ========= MENU DESKTOP ========= -->
+        <!-- ================================-->
+
         <!-- Nav login desktop -->
-        <nav className="desktop-menu-user-links">
+        <nav v-if="!user.isLogged" className="desktop-menu-user-links">
             <button className="link--dia link">
-                <User /> Inscription
+                <v-icon name="co-user" />Inscription
             </button>
 
             <button className="link--dia link">
-                <Key /> Connexion
+                <v-icon name="bi-key" />Connexion
+            </button>
+        </nav>
+
+        <nav v-else className="desktop-menu-user-links">
+            <router-link to="/mon-compte" relative="path" className="link--dia link">
+                <v-icon name="co-user" /> Mon compte
+            </router-link>
+            <button className="link--dia link">
+                <v-icon name="co-user" /> Déconnexion
             </button>
         </nav>
 
