@@ -40,7 +40,39 @@ const interfaceState = useInterfaceStore();
                     À propos
                 </router-link>
             </nav>
+
+            <!-- mobile nav login -->
+            <!-- Si l'utilisateur n'est pas connecté on lui propose de se connecter ou de créer un compte -->
+            <nav v-if="!user.isLogged" class="header__mobile-menu-user-links">
+                <li>
+                    <button class="link--dia link">
+                        Inscription
+                    </button>
+                </li>
+                <li>
+                    <button class="link--dia link">
+                        Connexion
+                    </button>
+                </li>
+            </nav>
+
+
+            <!-- A l'inverse, si l'utilisateur est connecté on lui propose d'accéder à ses informations personnelles ou de se déconnecter -->
+            <nav v-else className="header__mobile-menu-user-links">
+                <li>
+                    {/* On laisse un link ici car "mon compte" et une page et il faudra une url */}
+                    <router-link to="/mon-compte" relative="path" class="link--dia link">
+                        Mon compte
+                    </router-link>
+                </li>
+                <li>
+                    <button className="link--dia link">
+                        Déconnexion
+                    </button>
+                </li>
+            </nav>
         </div>
+
 
 
         <!-- ======================== -->
@@ -54,9 +86,9 @@ const interfaceState = useInterfaceStore();
             </router-link>
         </div>
 
-        <!-- ================================-->
+        <!-- ================================ -->
         <!-- ========= MENU DESKTOP ========= -->
-        <!-- ================================-->
+        <!-- ================================ -->
 
         <!-- Nav login desktop -->
         <nav v-if="!user.isLogged" className="desktop-menu-user-links">
