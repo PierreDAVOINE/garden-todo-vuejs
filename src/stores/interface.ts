@@ -8,6 +8,9 @@ export const useInterfaceStore = defineStore('interface', {
     switchMenu() {
       this.menuIsOpen = !this.menuIsOpen;
     },
+    setMenu(value: boolean) {
+      this.menuIsOpen = value;
+    },
     switchModal() {
       this.modalIsOpen = !this.modalIsOpen;
     },

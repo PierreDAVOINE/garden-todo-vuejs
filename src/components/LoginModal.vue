@@ -1,7 +1,92 @@
 <script setup lang="ts">
+import { useUserStore } from '../stores/user';
 import { useInterfaceStore } from '../stores/interface';
+import { dataUserValidation, dataUserValidationLogin } from '../utils/validate';
+import { ref } from 'vue';
+import { axiosInstance } from '../utils/axios';
+import jwtDecode from 'jwt-decode';
 
+const userState = useUserStore();
 const interfaceState = useInterfaceStore();
+
+const errorMessage = ref('')
+
+// Gestion du formulaire
+const handleSubmit = (e: Event) => {
+    e.preventDefault();
+
+    const errors = interfaceState.isSignUp ? dataUserValidationLogin(userState.userFormData) : dataUserValidation(userState.userFormData);
+    if (errors.length > 0) {
+        errorMessage.value = errors[0];
+    } else {
+        if (interfaceState.isSignUp) {
+            // Gestion de la connexion
+            loginUser();
+        } else {
+            // Gestion de l'inscription
+            signUpUser();
+        }
+    }
+}
+
+// Gestion de l'inscription
+const signUpUser = async () => {
+    try {
+        const response = await axiosInstance.post('/users/signup', {
+            user_name: userState.userFormData.name,
+            city: userState.userFormData.city,
+            email: userState.userFormData.email,
+            user_password: userState.userFormData.password,
+        });
+        //Si la réponse de l'API est différente de 200, alors il y a eu une erreur lors de la création de compte
+        if (response.status !== 200) {
+            response.data.message
+                ? errorMessage.value = response.data.message
+                : errorMessage.value = 'Notre serveur à "planté" ! Essayez à nouveau dans quelques instant.';
+        } else {
+            // Si tout est ok, on reset le formulaire d'inscription et on passe la modale en mode connexion
+            userState.resetUserFormData();
+            interfaceState.switchIsSignUp();
+        }
+    } catch (error) {
+        console.error(error)
+        errorMessage.value = "Une erreur s'est produite, veuillez réessayer dans quelques instants.";
+    }
+};
+
+// Gestion de la connexion
+const loginUser = async () => {
+    try {
+        const response = await axiosInstance.post('/users/login', {
+            email: userState.userFormData.email,
+            user_password: userState.userFormData.password,
+        });
+        if (response.status !== 200) {
+            response.data.message
+                ? errorMessage.value = response.data.message
+                : errorMessage.value = 'Notre serveur à "planté" ! Essayez à nouveau dans quelques instant.';
+        } else if (response.data.logged) {
+            // Si tout est ok, on reset le formulaire de connexion, on ferme la modale, on récupére les infos du token et on les stocke dans le store
+            userState.resetUserFormData();
+            interfaceState.switchModal();
+
+            const { id } = jwtDecode(response.data.token) as { id: number };
+
+            userState.setIsLogged(true);
+            userState.setUserData({
+                id,
+                name: response.data.pseudo as string,
+            });
+
+            // Pour sauvegarde les informations, on transforme l'objet en JSON string
+            // On stock le tout dans le localStorage
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
+    } catch (error) {
+        console.error(error)
+        errorMessage.value = "Une erreur s'est produite, veuillez réessayer dans quelques instants.";
+    }
+};
 
 </script>
 
@@ -30,32 +115,32 @@ const interfaceState = useInterfaceStore();
             </p>
 
             <!-- ==== Notification d'erreur ==== -->
-            <!-- <div v-if="errorMessage" className="errorMessage">{{errorMessage}}</div> -->
+            <div v-if="errorMessage" className="errorMessage">{{ errorMessage }}</div>
 
             <!-- ==== Formulaire ==== -->
-            <form>
+            <form @submit="(e) => handleSubmit(e)">
                 <!-- Si isSignup est false on affiche pas l'input name, city et passwordConfirm -->
-                <label htmlFor="name">Nom :</label>
-                <input type="text" name="name" id="name" placeholder="Ex : Dupont" required />
-                <label htmlFor="city">Ville (optionnel) :</label>
-                <input type="text" name="city" id="city" placeholder="Ex : Quimper" />
-
+                <label v-if="!interfaceState.isSignUp" htmlFor="name">Nom :</label>
+                <input v-if="!interfaceState.isSignUp" v-model="userState.userFormData.name" type="text" name="name"
+                    id="name" placeholder="Ex : Dupont" required />
+                <label v-if="!interfaceState.isSignUp" htmlFor="city">Ville (optionnel) :</label>
+                <input v-if="!interfaceState.isSignUp" v-model="userState.userFormData.city" type="text" name="city"
+                    id="city" placeholder="Ex : Quimper" />
                 <label htmlFor="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Ex : dupont@dupond.fr" required />
+                <input v-model="userState.userFormData.email" type="email" name="email" id="email"
+                    placeholder="Ex : dupont@dupond.fr" required />
                 <label htmlFor="password">Mot de passe :</label>
-                <input type="password" name="password" id="password" required />
-
+                <input v-model="userState.userFormData.password" type="password" name="password" id="password" required />
                 <!-- Sinon :  -->
-                <label htmlFor="confirmPassword">
-                    Confirmer votre mot de passe :
-                </label>
-
                 <!-- Si isSamePassword est false ET que l'input de confirmation n'est pas vide alors on met du rouge
                     Sinon si isSamePassword est true ET que l'input de confirmation n'est pas vide alors on met du vert
                     Sinon on n'applique pas de couleur particulière, on attend que l'utilisateur commence a saisir
                     quelque chose. -->
-
-                <input type="password" name="passwordConfirm" id="passwordConfirm" />
+                <label v-if="!interfaceState.isSignUp" htmlFor="confirmPassword">
+                    Confirmer votre mot de passe :
+                </label>
+                <input v-if="!interfaceState.isSignUp" v-model="userState.userFormData.passwordConfirm" type="password"
+                    name="passwordConfirm" id="passwordConfirm" />
                 <button type="submit">
                     Se connecter
                 </button>

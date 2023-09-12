@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { useUserStore } from '../stores/user';
 import { useInterfaceStore } from '../stores/interface';
+import { removeUserDataFromLocalStorage } from '../utils/user';
+import { useRouter } from 'vue-router';
 
-const user = useUserStore();
+const userState = useUserStore();
 const interfaceState = useInterfaceStore();
+
+const router = useRouter();
 
 const setModalIsOpen = (isSignUp: boolean) => {
     interfaceState.switchModal();
     interfaceState.setIsSignUp(isSignUp);
+}
+
+const handleClickDisconnect = (): void => {
+    interfaceState.setMenu(false);
+    removeUserDataFromLocalStorage();
+    userState.setIsLogged(false);
+    router.push('/');
 }
 
 </script>
@@ -38,7 +49,7 @@ const setModalIsOpen = (isSignUp: boolean) => {
                 <router-link to="/plantes" relative="path" class="link--io link">
                     Liste des plantes
                 </router-link>
-                <router-link to="/mon-espace-vert" relative="path" class="link--io link">
+                <router-link v-if="userState.isLogged" to="/mon-espace-vert" relative="path" class="link--io link">
                     Mon espace vert
                 </router-link>
                 <router-link to="/a-propos" relative="path" class="link--io link">
@@ -48,7 +59,7 @@ const setModalIsOpen = (isSignUp: boolean) => {
 
             <!-- mobile nav login -->
             <!-- Si l'utilisateur n'est pas connecté on lui propose de se connecter ou de créer un compte -->
-            <nav v-if="!user.isLogged" class="header__mobile-menu-user-links">
+            <nav v-if="!userState.isLogged" class="header__mobile-menu-user-links">
                 <li>
                     <button class="link--dia link">
                         Inscription
@@ -71,7 +82,7 @@ const setModalIsOpen = (isSignUp: boolean) => {
                     </router-link>
                 </li>
                 <li>
-                    <button class="link--dia link">
+                    <button class="link--dia link" @click="handleClickDisconnect">
                         Déconnexion
                     </button>
                 </li>
@@ -96,7 +107,7 @@ const setModalIsOpen = (isSignUp: boolean) => {
         <!-- ================================ -->
 
         <!-- Nav login desktop -->
-        <nav v-if="!user.isLogged" class="desktop-menu-user-links">
+        <nav v-if="!userState.isLogged" class="desktop-menu-user-links">
             <button class="link--dia link" @click="setModalIsOpen(false)">
                 <v-icon name="co-user" />Inscription
             </button>
@@ -110,7 +121,7 @@ const setModalIsOpen = (isSignUp: boolean) => {
             <router-link to="/mon-compte" relative="path" className="link--dia link">
                 <v-icon name="co-user" /> Mon compte
             </router-link>
-            <button class="link--dia link">
+            <button class="link--dia link" @click="handleClickDisconnect">
                 <v-icon name="co-user" /> Déconnexion
             </button>
         </nav>
@@ -123,7 +134,7 @@ const setModalIsOpen = (isSignUp: boolean) => {
             <router-link to="/plantes" relative="path" class="link--io link">
                 Liste des plantes
             </router-link>
-            <router-link to="/mon-espace-vert" relative="path" class="link--io link">
+            <router-link v-if="userState.isLogged" to="/mon-espace-vert" relative="path" class="link--io link">
                 Mon espace vert
             </router-link>
             <router-link to="/a-propos" relative="path" class="link--io link">
