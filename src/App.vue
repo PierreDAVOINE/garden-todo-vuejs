@@ -34,7 +34,7 @@ onMounted(() => {
                 userState.setIsLogged(true);
                 userState.setUserData({
                     id,
-                    name: "localUser.name",
+                    name: localUser.pseudo,
                 });
             }
         } catch (error) {
