@@ -41,4 +41,6 @@ export interface Userdatasignprops extends IObjectKeys {
 export interface IUserData {
   id: number;
   name: string;
+  city: string;
+  email: string;
 }

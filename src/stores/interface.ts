@@ -7,6 +7,12 @@ export const useInterfaceStore = defineStore('interface', {
       modalIsOpen: false,
       isSignUp: false,
       isDeleteModalOpen: false,
+      isEditFormAccount: {
+        name: false,
+        city: false,
+        email: false,
+        password: false,
+      },
     };
   },
   actions: {

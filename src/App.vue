@@ -7,7 +7,7 @@ import { useUserStore } from './stores/user';
 import { useInterfaceStore } from './stores/interface';
 import { onMounted } from 'vue';
 import jwtDecode from 'jwt-decode';
-import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from './utils/user';
+import { getUserDataFromApi, getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from './utils/user';
 
 const userState = useUserStore();
 const interfaceState = useInterfaceStore();
@@ -32,10 +32,9 @@ onMounted(() => {
             } else {
                 // S'il y a un token encore valide, on passer isLogged à true.
                 userState.setIsLogged(true);
-                userState.setUserData({
-                    id,
-                    name: localUser.pseudo,
-                });
+                // On met à jour les données de l'utilisateur dans le store
+                userState.getUserDataFromApi(id);
+
             }
         } catch (error) {
             console.error(error);

@@ -35,10 +35,51 @@ const handleSubmit = async (e: Event) => {
             <h3>Vos informations :</h3>
             <div class="account__container">
                 <form @submit="(e) => handleSubmit(e)">
+                    <!-- Edit name -->
                     <div className="content__container">
                         <span className="label-item">
-                            <User /> Prénom{' '}:{' '}
+                            <v-icon name="co-user" /> Prénom :
                         </span>
+
+                        <input v-if="interfaceState.isEditFormAccount.name" type="text" />
+
+                        <span v-else>{{ userState.userData.name }}</span>
+
+                        <div className="wrapper-btn">
+                            <button type="button" title="Éditer mon nom">
+                                <v-icon name="la-edit-solid" /> Éditer
+                            </button>
+
+                            <button v-if="interfaceState.isEditFormAccount.name" type="submit"
+                                title="Valider les modifications">
+                                <v-icon name="la-check-circle" />Valider
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <!-- Edit city -->
+                    <div className="content__container">
+                        <span className="label-item">
+                            <v-icon name="la-map-marked-alt-solid" /> Ville :
+                        </span>
+
+                        <input v-if="interfaceState.isEditFormAccount.city" type="text" />
+                        <span v-else className="user-infos">
+                            {{ userState.userData.city }}
+                        </span>
+
+                        <div className="wrapper-btn">
+                            <button type="button" title="Éditer ma ville">
+                                <v-icon name="la-edit-solid" /> Éditer
+                            </button>
+
+                            <button v-if="interfaceState.isEditFormAccount.city" type="submit"
+                                title="Valider les modifications">
+                                <v-icon name="la-check-circle" />Valider
+                            </button>
+
+                        </div>
                     </div>
                 </form>
             </div>

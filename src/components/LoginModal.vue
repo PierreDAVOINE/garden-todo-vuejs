@@ -5,6 +5,7 @@ import { dataUserValidation, dataUserValidationLogin } from '../utils/validate';
 import { computed, ref, watch } from 'vue';
 import { axiosInstance } from '../utils/axios';
 import jwtDecode from 'jwt-decode';
+import { getUserDataFromApi } from '../utils/user';
 
 const userState = useUserStore();
 const interfaceState = useInterfaceStore();
@@ -74,10 +75,7 @@ const loginUser = async () => {
             const { id } = jwtDecode(response.data.token) as { id: number };
 
             userState.setIsLogged(true);
-            userState.setUserData({
-                id,
-                name: response.data.pseudo as string,
-            });
+            userState.getUserDataFromApi(id);
 
             // Pour sauvegarde les informations, on transforme l'objet en JSON string
             // On stock le tout dans le localStorage
@@ -104,7 +102,7 @@ const handleErrorStyle = computed(() => ({
     inputError: !isSamePassword.value && userState.userFormData.passwordConfirm !== '',
     // Sinon si isSamePassword est true ET que l'input de confirmation n'est pas vide alors on met du vert
     inputGood: isSamePassword.value && userState.userFormData.passwordConfirm !== '',
-}));    
+}));
 
 </script>
 
