@@ -2,7 +2,12 @@ import { defineStore } from 'pinia';
 
 export const useInterfaceStore = defineStore('interface', {
   state: () => {
-    return { menuIsOpen: false, modalIsOpen: false, isSignUp: false };
+    return {
+      menuIsOpen: false,
+      modalIsOpen: false,
+      isSignUp: false,
+      isDeleteModalOpen: false,
+    };
   },
   actions: {
     switchMenu() {
