@@ -13,6 +13,13 @@ export const useUserStore = defineStore('user', {
         password: '',
         passwordConfirm: '',
       },
+      userFormDataAccount: {
+        name: '',
+        city: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      },
       userData: {
         id: 0,
         name: '',
@@ -41,6 +48,7 @@ export const useUserStore = defineStore('user', {
     },
     setUserData(data: IUserData) {
       this.userData = data;
+      this.setUserDataAccount(data);
     },
     setIsLogged(value: boolean) {
       this.isLogged = value;
@@ -54,6 +62,15 @@ export const useUserStore = defineStore('user', {
         city: response.data[0].city || '',
         email: response.data[0].email,
       });
+    },
+    setUserDataAccount(data: IUserData) {
+      this.userFormDataAccount = {
+        name: data.name,
+        city: data.city,
+        email: data.email,
+        password: '',
+        passwordConfirm: '',
+      };
     },
   },
 });

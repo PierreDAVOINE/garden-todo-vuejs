@@ -31,5 +31,8 @@ export const useInterfaceStore = defineStore('interface', {
     switchIsSignUp() {
       this.isSignUp = !this.isSignUp;
     },
+    switchIsEditFormAccount(field: keyof typeof this.isEditFormAccount) {
+      this.isEditFormAccount[field] = !this.isEditFormAccount[field];
+    },
   },
 });

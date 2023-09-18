@@ -19,7 +19,7 @@ const handleSubmit = async (e: Event) => {
     <div className="account">
         <div v-if="!userState.isLogged">
             <h2>
-                <XCircle /> Oups tu as du te planter !
+                Oups tu as du te planter !
             </h2>
             <h3>Tu dois d'abord te connecter pour accéder à ton compte !</h3>
         </div>
@@ -36,17 +36,19 @@ const handleSubmit = async (e: Event) => {
             <div class="account__container">
                 <form @submit="(e) => handleSubmit(e)">
                     <!-- Edit name -->
-                    <div className="content__container">
-                        <span className="label-item">
+                    <div class="content__container">
+                        <span class="label-item">
                             <v-icon name="co-user" /> Prénom :
                         </span>
 
-                        <input v-if="interfaceState.isEditFormAccount.name" type="text" />
+                        <input v-if="interfaceState.isEditFormAccount.name" type="text"
+                            v-model="userState.userFormDataAccount.name" />
 
                         <span v-else>{{ userState.userData.name }}</span>
 
-                        <div className="wrapper-btn">
-                            <button type="button" title="Éditer mon nom">
+                        <div class="wrapper-btn">
+                            <button @click="interfaceState.switchIsEditFormAccount('name')" type="button"
+                                title="Éditer mon nom">
                                 <v-icon name="la-edit-solid" /> Éditer
                             </button>
 
@@ -59,24 +61,88 @@ const handleSubmit = async (e: Event) => {
                     </div>
 
                     <!-- Edit city -->
-                    <div className="content__container">
-                        <span className="label-item">
+                    <div class="content__container">
+                        <span class="label-item">
                             <v-icon name="la-map-marked-alt-solid" /> Ville :
                         </span>
 
-                        <input v-if="interfaceState.isEditFormAccount.city" type="text" />
-                        <span v-else className="user-infos">
+                        <input v-if="interfaceState.isEditFormAccount.city" type="text"
+                            v-model="userState.userFormDataAccount.city" />
+                        <span v-else class="user-infos">
                             {{ userState.userData.city }}
                         </span>
 
-                        <div className="wrapper-btn">
-                            <button type="button" title="Éditer ma ville">
+                        <div class="wrapper-btn">
+                            <button @click="interfaceState.switchIsEditFormAccount('city')" type="button"
+                                title="Éditer ma ville">
                                 <v-icon name="la-edit-solid" /> Éditer
                             </button>
 
                             <button v-if="interfaceState.isEditFormAccount.city" type="submit"
                                 title="Valider les modifications">
-                                <v-icon name="la-check-circle" />Valider
+                                <v-icon name="la-check-circle" /> Valider
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Edit email -->
+                    <div class="content__container">
+                        <span class="label-item">
+                            <v-icon name="la-envelope-open-text-solid" /> Email :
+                        </span>
+                        <input v-if="interfaceState.isEditFormAccount.email" type="email"
+                            v-model="userState.userFormDataAccount.email" />
+
+                        <span v-else class="user-infos">
+                            {{ userState.userData.email }}
+                        </span>
+
+                        <div class="wrapper-btn">
+                            <button @click="interfaceState.switchIsEditFormAccount('email')" type="button"
+                                title="Éditer mon email">
+                                <v-icon name="la-edit-solid" /> Éditer
+                            </button>
+
+                            <button v-if="interfaceState.isEditFormAccount.email" type="submit"
+                                title="Valider les modifications">
+                                <v-icon name="la-check-circle" /> Valider
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <!-- Edit password -->
+                    <div class="content__container password-element">
+                        <span class="label-item">
+                            <v-icon name="la-lock-solid" />
+                            Mot de passe :
+                        </span>
+
+
+                        <div v-if="interfaceState.isEditFormAccount.password" class="password-check__container">
+                            <div>
+                                <label>Nouveau mot de passe :</label>
+                                <input type="password" placeholder="Nouveau mot de passe"
+                                    v-model="userState.userFormDataAccount.password" />
+                            </div>
+                            <div>
+                                <label>Confirmation :</label>
+                                <input type="password" placeholder="Confirmer le mot de passe"
+                                    v-model="userState.userFormDataAccount.passwordConfirm" />
+                            </div>
+                        </div>
+
+                        <span v-else class="user-infos">********</span>
+
+                        <div class="wrapper-btn">
+                            <button @click="interfaceState.switchIsEditFormAccount('password')" type="button"
+                                title="Éditer mon mot de passe">
+                                <v-icon name="la-edit-solid" /> Éditer
+                            </button>
+
+                            <button v-if="interfaceState.isEditFormAccount.password" type="submit"
+                                title="Valider les modifications">
+                                <v-icon name="la-check-circle" /> Valider
                             </button>
 
                         </div>
