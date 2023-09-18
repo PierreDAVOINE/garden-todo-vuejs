@@ -11,7 +11,7 @@ import Us from './pages/Us.vue';
 import Notice from './pages/Notice.vue';
 import Error404 from './pages/Error404.vue';
 import { OhVueIcon, addIcons } from 'oh-vue-icons';
-import { CoUser, BiKey, LaDoorOpenSolid } from 'oh-vue-icons/icons';
+import { CoUser, BiKey, LaDoorOpenSolid, IoClose } from 'oh-vue-icons/icons';
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -39,7 +39,7 @@ const router = createRouter({
 });
 
 // Ajout des icônes
-addIcons(CoUser, BiKey, LaDoorOpenSolid);
+addIcons(CoUser, BiKey, LaDoorOpenSolid, IoClose);
 app.component('v-icon', OhVueIcon);
 
 // Utilisation du router
