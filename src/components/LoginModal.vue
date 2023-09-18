@@ -2,7 +2,7 @@
 import { useUserStore } from '../stores/user';
 import { useInterfaceStore } from '../stores/interface';
 import { dataUserValidation, dataUserValidationLogin } from '../utils/validate';
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { axiosInstance } from '../utils/axios';
 import jwtDecode from 'jwt-decode';
 
@@ -10,6 +10,7 @@ const userState = useUserStore();
 const interfaceState = useInterfaceStore();
 
 const errorMessage = ref('')
+const isSamePassword = ref(false);
 
 // Gestion du formulaire
 const handleSubmit = (e: Event) => {
@@ -88,6 +89,23 @@ const loginUser = async () => {
     }
 };
 
+// Vérification de la confirmation du mot de passe
+watch(userState.userFormData, (newFormData) => {
+    if (newFormData.password === newFormData.passwordConfirm) {
+        isSamePassword.value = true;
+    } else {
+        isSamePassword.value = false;
+    }
+});
+
+// Gestion du style
+const handleErrorStyle = computed(() => ({
+    // Si isSamePassword est false ET que l'input de confirmation n'est pas vide alors on met du rouge
+    inputError: !isSamePassword.value && userState.userFormData.passwordConfirm !== '',
+    // Sinon si isSamePassword est true ET que l'input de confirmation n'est pas vide alors on met du vert
+    inputGood: isSamePassword.value && userState.userFormData.passwordConfirm !== '',
+}));    
+
 </script>
 
 <template>
@@ -140,7 +158,7 @@ const loginUser = async () => {
                     Confirmer votre mot de passe :
                 </label>
                 <input v-if="!interfaceState.isSignUp" v-model="userState.userFormData.passwordConfirm" type="password"
-                    name="passwordConfirm" id="passwordConfirm" />
+                    name="passwordConfirm" id="passwordConfirm" :class="handleErrorStyle" />
                 <button type="submit">
                     Se connecter
                 </button>
