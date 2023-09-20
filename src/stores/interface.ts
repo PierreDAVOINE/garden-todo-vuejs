@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { PlantAllProps } from '../@types/plants';
 
 export const useInterfaceStore = defineStore('interface', {
   state: () => {
@@ -13,6 +14,7 @@ export const useInterfaceStore = defineStore('interface', {
         email: false,
         password: false,
       },
+      plantPage: <PlantAllProps>{},
     };
   },
   actions: {
@@ -44,6 +46,10 @@ export const useInterfaceStore = defineStore('interface', {
     },
     setIsDeleteModalOpen(value: boolean) {
       this.isDeleteModalOpen = value;
+    },
+    setPlantPage(plant: PlantAllProps) {
+      console.log('ici');
+      this.plantPage = plant;
     },
   },
 });

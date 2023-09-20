@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { useUserStore } from '../stores/user';
+import { useInterfaceStore } from '../stores/interface';
+import { PlantAllProps } from '../@types/plants';
 
 const userState = useUserStore();
+const interfaceState = useInterfaceStore();
 
 defineProps({
     plant: {
-        type: Object,
+        type: Object as () => PlantAllProps,
         required: true
     }
 })
@@ -13,10 +16,9 @@ defineProps({
 </script>
 
 <template>
-    <div className="plant-card">
+    <div className="plant-card" @click="interfaceState.setPlantPage(plant)">
         <!-- <Link to={`/plantes/${plant.slug_name}`} relative="path"> -->
-        <router-link to="/" relative="path">
-
+        <router-link :to="'/plantes/' + plant.slug_name" relative="path">
             <picture>
                 <!-- <source srcSet={plant.url_image} media="(max-width: 840px)">
                     </source> -->
