@@ -21,6 +21,7 @@ import {
   LaMapMarkedAltSolid,
   LaEnvelopeOpenTextSolid,
   LaLockSolid,
+  IoWarning,
 } from 'oh-vue-icons/icons';
 
 const pinia = createPinia();
@@ -58,7 +59,8 @@ addIcons(
   LaCheckCircle,
   LaMapMarkedAltSolid,
   LaEnvelopeOpenTextSolid,
-  LaLockSolid
+  LaLockSolid,
+  IoWarning
 );
 app.component('v-icon', OhVueIcon);
 

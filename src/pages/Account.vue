@@ -2,17 +2,42 @@
 import { useUserStore } from '../stores/user';
 import { useInterfaceStore } from '../stores/interface';
 import DeleteUserModal from '../components/DeleteUserModal.vue';
+import { ref } from 'vue';
+import { dataUserValidationUpdate } from '../utils/validate';
+import { axiosInstance } from '../utils/axios';
 
 const userState = useUserStore();
 const interfaceState = useInterfaceStore();
 
+
+const errMessage = ref('');
+
 // Gestion du submit du formulaire
 const handleSubmit = async (e: Event) => {
+    errMessage.value = '';
     e.preventDefault();
-    console.log("submit!");
+
+    // On test d'abord les données avant l'envoie à l'API
+    const errors = dataUserValidationUpdate(userState.userFormDataAccount);
+    if (errors.length > 0) {
+        errMessage.value = errors[0];
+    } else {
+        const patchResponse = await axiosInstance.patch(`/users/${userState.userFormDataAccount.id}`, {
+            id: userState.userFormDataAccount.id,
+            user_name: userState.userFormDataAccount.name,
+            email: userState.userFormDataAccount.email,
+            city: userState.userFormDataAccount.city,
+            user_password: userState.userFormDataAccount.password,
+        });
+        if (patchResponse.status != 200) {
+            errMessage.value = "Une erreur est survenue lors de la mise à jour de vos informations.";
+        } else {
+            userState.updateUserData()
+            interfaceState.resetEditFormAccount();
+        }
+    }
 
 };
-
 </script>
 
 <template>
@@ -25,13 +50,15 @@ const handleSubmit = async (e: Event) => {
         </div>
 
         <div v-else>
-
             <DeleteUserModal v-if="interfaceState.isDeleteModalOpen" />
-
             <h2>
-                <Sun class="rotate" /> Bienvenue
+                <!-- <Sun class="rotate" /> Bienvenue -->
                 <span class="name">{{ userState.userData.name }}</span>
             </h2>
+
+            <!-- Error message -->
+            <span v-show="errMessage" className="error-msg">{{ errMessage }}</span>
+
             <h3>Vos informations :</h3>
             <div class="account__container">
                 <form @submit="(e) => handleSubmit(e)">
@@ -40,18 +67,15 @@ const handleSubmit = async (e: Event) => {
                         <span class="label-item">
                             <v-icon name="co-user" /> Prénom :
                         </span>
-
                         <input v-if="interfaceState.isEditFormAccount.name" type="text"
                             v-model="userState.userFormDataAccount.name" />
 
                         <span v-else>{{ userState.userData.name }}</span>
-
                         <div class="wrapper-btn">
                             <button @click="interfaceState.switchIsEditFormAccount('name')" type="button"
                                 title="Éditer mon nom">
                                 <v-icon name="la-edit-solid" /> Éditer
                             </button>
-
                             <button v-if="interfaceState.isEditFormAccount.name" type="submit"
                                 title="Valider les modifications">
                                 <v-icon name="la-check-circle" />Valider
@@ -65,7 +89,6 @@ const handleSubmit = async (e: Event) => {
                         <span class="label-item">
                             <v-icon name="la-map-marked-alt-solid" /> Ville :
                         </span>
-
                         <input v-if="interfaceState.isEditFormAccount.city" type="text"
                             v-model="userState.userFormDataAccount.city" />
                         <span v-else class="user-infos">
@@ -77,7 +100,6 @@ const handleSubmit = async (e: Event) => {
                                 title="Éditer ma ville">
                                 <v-icon name="la-edit-solid" /> Éditer
                             </button>
-
                             <button v-if="interfaceState.isEditFormAccount.city" type="submit"
                                 title="Valider les modifications">
                                 <v-icon name="la-check-circle" /> Valider
@@ -92,7 +114,6 @@ const handleSubmit = async (e: Event) => {
                         </span>
                         <input v-if="interfaceState.isEditFormAccount.email" type="email"
                             v-model="userState.userFormDataAccount.email" />
-
                         <span v-else class="user-infos">
                             {{ userState.userData.email }}
                         </span>
@@ -102,7 +123,6 @@ const handleSubmit = async (e: Event) => {
                                 title="Éditer mon email">
                                 <v-icon name="la-edit-solid" /> Éditer
                             </button>
-
                             <button v-if="interfaceState.isEditFormAccount.email" type="submit"
                                 title="Valider les modifications">
                                 <v-icon name="la-check-circle" /> Valider
@@ -139,14 +159,18 @@ const handleSubmit = async (e: Event) => {
                                 title="Éditer mon mot de passe">
                                 <v-icon name="la-edit-solid" /> Éditer
                             </button>
-
                             <button v-if="interfaceState.isEditFormAccount.password" type="submit"
                                 title="Valider les modifications">
                                 <v-icon name="la-check-circle" /> Valider
                             </button>
-
                         </div>
                     </div>
+
+                    <!-- Delete account -->
+                    <button class="yes" @click="interfaceState.setIsDeleteModalOpen(true)">
+                        <v-icon name="io-close" />
+                        SUPPRIMER MON COMPTE
+                    </button>
                 </form>
             </div>
         </div>
@@ -295,6 +319,7 @@ const handleSubmit = async (e: Event) => {
         gap: 0.5rem;
         align-content: flex-start;
         align-items: flex-start;
+        flex-direction: column;
     }
 
     @media screen and (min-width: 900px) {
@@ -309,20 +334,16 @@ const handleSubmit = async (e: Event) => {
             flex-direction: column;
             align-items: flex-start;
         }
-
-        .password-element {
-            flex-direction: column;
-        }
     }
 }
 
-@media screen and (max-width: 1345px) {
+@media screen and (max-width: 1440px) {
     .account {
         background-image: none;
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 680px) {
     .account {
         button {
             margin-left: 0;

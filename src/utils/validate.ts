@@ -77,7 +77,8 @@ export const dataUserValidationLogin = (dataUser: Userdatasignprops) => {
 
 // Validation de dataUser (modification)
 export const dataUserValidationUpdate = (dataUser: Userdataprops) => {
-  const { name, city, email, password } = dataUser as Userdataprops;
+  const { name, city, email, password, passwordConfirm } =
+    dataUser as Userdataprops;
   const errors = [];
 
   if (!nameValidation(name)) {
@@ -98,6 +99,10 @@ export const dataUserValidationUpdate = (dataUser: Userdataprops) => {
     errors.push(
       'Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial'
     );
+  }
+
+  if (password && password !== passwordConfirm) {
+    errors.push('Les mots de passe ne sont pas identiques');
   }
 
   return errors;

@@ -7,7 +7,7 @@ import { useUserStore } from './stores/user';
 import { useInterfaceStore } from './stores/interface';
 import { onMounted } from 'vue';
 import jwtDecode from 'jwt-decode';
-import { getUserDataFromApi, getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from './utils/user';
+import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from './utils/user';
 
 const userState = useUserStore();
 const interfaceState = useInterfaceStore();
@@ -45,7 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <LoginModal v-if="interfaceState.modalIsOpen" />
+    <LoginModal v-show="interfaceState.modalIsOpen" />
     <Header />
     <Pages />
     <Footer />

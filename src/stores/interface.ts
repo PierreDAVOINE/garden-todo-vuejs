@@ -34,5 +34,16 @@ export const useInterfaceStore = defineStore('interface', {
     switchIsEditFormAccount(field: keyof typeof this.isEditFormAccount) {
       this.isEditFormAccount[field] = !this.isEditFormAccount[field];
     },
+    resetEditFormAccount() {
+      this.isEditFormAccount = {
+        name: false,
+        city: false,
+        email: false,
+        password: false,
+      };
+    },
+    setIsDeleteModalOpen(value: boolean) {
+      this.isDeleteModalOpen = value;
+    },
   },
 });

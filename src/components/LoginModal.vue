@@ -271,6 +271,9 @@ $screenSizeModal: 800px;
 
     // Le bouton de fermeture
     &__close {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background: none;
         position: absolute;
         width: 2.5rem;
@@ -279,7 +282,6 @@ $screenSizeModal: 800px;
         right: 0.5rem;
         border-radius: 50%;
         border: 2px solid black;
-        padding: 0.2rem 0rem 0rem 0rem;
         cursor: pointer;
 
         @media screen and (min-width: $screenSizeModal) {

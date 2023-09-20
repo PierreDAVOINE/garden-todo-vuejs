@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', {
         passwordConfirm: '',
       },
       userFormDataAccount: {
+        id: 0,
         name: '',
         city: '',
         email: '',
@@ -31,6 +32,16 @@ export const useUserStore = defineStore('user', {
   actions: {
     resetUserFormData() {
       this.userFormData = {
+        name: '',
+        city: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      };
+    },
+    resetUserFormDataAccount() {
+      this.userFormDataAccount = {
+        id: 0,
         name: '',
         city: '',
         email: '',
@@ -65,11 +76,20 @@ export const useUserStore = defineStore('user', {
     },
     setUserDataAccount(data: IUserData) {
       this.userFormDataAccount = {
+        id: data.id,
         name: data.name,
         city: data.city,
         email: data.email,
         password: '',
         passwordConfirm: '',
+      };
+    },
+    updateUserData() {
+      this.userData = {
+        id: this.userFormDataAccount.id,
+        name: this.userFormDataAccount.name,
+        city: this.userFormDataAccount.city,
+        email: this.userFormDataAccount.email,
       };
     },
   },
