@@ -32,10 +32,9 @@ onMounted(() => {
             } else {
                 // S'il y a un token encore valide, on passer isLogged à true.
                 userState.setIsLogged(true);
-                userState.setUserData({
-                    id,
-                    name: "localUser.name",
-                });
+                // On met à jour les données de l'utilisateur dans le store
+                userState.getUserDataFromApi(id);
+
             }
         } catch (error) {
             console.error(error);
@@ -46,7 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <LoginModal v-if="interfaceState.modalIsOpen" />
+    <LoginModal v-show="interfaceState.modalIsOpen" />
     <Header />
     <Pages />
     <Footer />

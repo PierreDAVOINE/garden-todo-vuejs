@@ -28,6 +28,7 @@ export interface Userdataprops extends IObjectKeys {
   city: string;
   email: string;
   password: string;
+  passwordConfirm: string;
 }
 
 export interface Userdatasignprops extends IObjectKeys {
@@ -41,4 +42,6 @@ export interface Userdatasignprops extends IObjectKeys {
 export interface IUserData {
   id: number;
   name: string;
+  city: string;
+  email: string;
 }
