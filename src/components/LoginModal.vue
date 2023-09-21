@@ -5,7 +5,6 @@ import { dataUserValidation, dataUserValidationLogin } from '../utils/validate';
 import { computed, ref, watch } from 'vue';
 import { axiosInstance } from '../utils/axios';
 import jwtDecode from 'jwt-decode';
-import { getUserDataFromApi } from '../utils/user';
 
 const userState = useUserStore();
 const interfaceState = useInterfaceStore();

@@ -5,6 +5,7 @@ import App from './App.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './pages/Home.vue';
 import PlantsList from './pages/PlantsList.vue';
+import PlantPage from './pages/PlantPage.vue';
 import Account from './pages/Account.vue';
 import MySpace from './pages/MySpace.vue';
 import Us from './pages/Us.vue';
@@ -35,6 +36,7 @@ const routes = [
     component: Home,
   },
   { path: '/plantes', name: 'plantes', component: PlantsList },
+  { path: '/plantes/:plantSlug', name: 'plante', component: PlantPage },
   { path: '/mon-compte', name: 'account', component: Account },
   { path: '/mon-espace-vert', name: 'garden', component: MySpace },
   { path: '/a-propos', name: 'us', component: Us },
