@@ -16,7 +16,7 @@ const interfaceState = useInterfaceStore();
 const isOpen = ref(false);
 
 const handleOpenWindow = () => {
-    isOpen.value = !isOpen;
+    isOpen.value = !isOpen.value;
 }
 
 // plant stock toutes les infos de la plante à afficher
@@ -42,7 +42,6 @@ watch(plantPage, (newValue) => {
         plant.value = interfaceState.plantPage;
     } else {
         getPlantData();
-
     }
 });
 
@@ -180,7 +179,6 @@ const getPlantData = async () => {
                     </p>
                 </div>
 
-                <!-- TODO: Mettre en place l'ouverture de la fenêtre au click -->
                 <button @click="handleOpenWindow" class="btn-window">
                     {{ isOpen ? '▲ Réduire ▲ ' : '▼ Agrandir ▼ ' }}
                 </button>

@@ -48,7 +48,6 @@ export const useInterfaceStore = defineStore('interface', {
       this.isDeleteModalOpen = value;
     },
     setPlantPage(plant: PlantAllProps) {
-      console.log('ici');
       this.plantPage = plant;
     },
   },

@@ -14,8 +14,8 @@ const fetchPlants = async () => {
     const response = await axiosInstance.get('/plants');
     if (response.status != 200) {
         // errMessage.value = "Une erreur est survenue lors de la mise à jour de vos informations.";
+        console.log("Impossible de charger les plantes depuis l'API.")
     } else {
-        console.log(response.data)
         plantsList.value = response.data;
     }
 };
