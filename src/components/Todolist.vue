@@ -4,7 +4,328 @@
 </script>
 
 <template>
-    <h2>Todolist</h2>
+    <div class="todolist__container">
+        <div class="tasks__list__container">
+            <h2 class="todolist__heading">Ma Todolist</h2>
+            <!-- {/* utilisation de reactSortable, dans la création d'élément tache  */} -->
+            <!-- <ul>
+          S'il y a des tâches alors :  
+            <ReactSortable list={tasks} setList={setTasks} onEnd={()=> setIsUpdating(!isUpdating)}>
+                {tasks.map((task) => (
+                // créer un li avec une key id spécifique
+                <li key={task.id} className="task__item">
+                    <label className="container">
+                        <input type="checkbox" defaultChecked={task.statut} onChange={(e)=> handleCheckTask(e, task.id)}
+                        />
+                        <span className="checkmark"></span>
+                    </label>
+
+                    {editingTaskId === task.id ? (
+                    <>
+                        <form onSubmit={(e)=> updateTask(e, task.id)}>
+                            <label htmlFor="item"></label>
+                            <input id="item" type="text" // définir en champs texte maxLength={23} // obligé de mettre une
+                                max lenght pour éviter l'overflow ( et harmoniser la page ) value={editingTaskText} //
+                                valeur définie onChange={(e)=> setEditingTaskText(e.target.value)} // quand modifications,
+                            setEditingTaskText appellé, pour modifier EditingTaskText
+                            className="task__text"
+                            />
+                            <button type="submit" className="action__button">
+                                <CheckSquare />
+                            </button>
+                        </form>
+                    </>
+                    ) : (
+                    <span className={ task.statut ? 'task__text checked' : 'task__text' }>
+                        {task.task_description}
+                    </span> //pour récupérer la description texte de la tâche
+                    )}
+                    {!editingTaskId && (
+                    <>
+                        <button onClick={()=>
+                            startEditingTask(task.id, task.task_description)
+                            }
+                            className="action__button">
+                            <Edit />
+                        </button>
+
+                        {/* Supprimer la tâche via ID quand on clique sur le bouton delete */}
+                        <button onClick={()=> deleteTask(task.id)}
+                            className="action__button_delete">
+                            <Trash2 />
+                        </button>
+                    </>
+                    )}
+                </li>
+                ))}
+            </ReactSortable>
+            )}
+            </ul> -->
+        </div>
+
+        <div className="add__task">
+            <form>
+                <label htmlFor="send"></label>
+                <input id="send" type="text" class="task__input" placeholder="Nouvelle tâche..." />
+                <button type="submit" class="add__button">
+                    <!-- <PlusCircle /> -->
+                    +
+                    <!-- {/* bouton pour créer une nouvelle tâche */} -->
+                </button>
+            </form>
+        </div>
+    </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.todolist__container {
+    align-items: center;
+    flex-grow: 1;
+
+    @media screen and (min-width: 1500px) {
+        max-width: 45%;
+
+        h2 {
+            margin-top: -20px;
+        }
+    }
+
+    @media screen and (min-width: 1800px) {
+        max-width: 35%;
+
+        h2 {
+            margin-top: -20px;
+        }
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-top: 0px;
+    }
+}
+
+.todolist__heading {
+    color: white;
+}
+
+.tasks__list__container {
+    //  text-align:left;
+    color: black;
+    background-color: #799f7a;
+    /*border: 1px solid black;
+  border-style: dashed;*/
+    border-radius: 10px;
+    padding: 2rem;
+    /*margin: 2rem;*/
+    margin: 1.5rem;
+    overflow: auto;
+    position: relative;
+    overflow-y: auto;
+    max-height: 60vh;
+
+    span {
+        margin-right: 2rem;
+        margin-left: 1rem;
+        flex-grow: 2;
+        overflow: hidden;
+        height: 2.5rem;
+
+        &.checked {
+            text-decoration: line-through;
+        }
+    }
+
+    li {
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        // justify-content: flex-end;
+        padding: 1rem 0.75rem;
+        margin-top: 0.5rem;
+
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+    }
+
+    input {
+        height: 2.5rem;
+        font-size: 1rem;
+        flex-grow: 2;
+        overflow: hidden;
+        margin-left: 1rem;
+    }
+}
+
+.add__task {
+    height: 3rem;
+    margin: 2rem;
+
+    // border: 1px solid red;
+    form {
+        justify-content: center;
+        display: flex;
+    }
+
+    input {
+        width: 100%;
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+        font-size: 1.3rem;
+        border-radius: 5px;
+    }
+
+    button {
+        border-radius: 50%;
+        background: none;
+        border: none;
+
+        svg {
+            width: 3rem;
+            height: 3rem
+        }
+    }
+
+    button:hover {
+        color: #799f7a;
+    }
+
+}
+
+.action__button_delete {
+    border: none;
+    margin-left: 0.2rem;
+    background-color: white;
+}
+
+.action__button {
+    border: none;
+    background-color: white;
+}
+
+// je ne sais même pas de ou sort le marker, avec sortable peut être
+li.task__item::marker {
+    content: none;
+}
+
+.task__item button:hover {
+    color: #799f7a;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+// GESTION DE LA CHECKBOX
+.container {
+    display: block;
+    position: relative;
+    padding-left: 50px;
+    // margin-bottom: 12px;
+    margin-top: 2px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 40px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked~.checkmark {
+    background-color: #799f7a;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 15px;
+    top: 2px;
+    width: 10px;
+    height: 25px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+// FIN DE GESTION DE LA CHECKBOX
+
+//! Media queries
+
+//! < 600 px
+@media screen and (max-width: 600px) {
+    .add__task {
+        margin: 0.75rem;
+    }
+
+    .tasks__list__container {
+        margin: 1.5rem;
+        /*margin: 0.75rem;*/
+        /*padding: 0.5rem;*/
+        overflow-y: auto;
+        max-height: 60vh;
+
+        span {
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
+            font-size: 1.2rem;
+            height: 2.5rem;
+        }
+
+        input {
+            flex-grow: 2;
+            overflow: hidden;
+            height: 2.5rem;
+        }
+    }
+
+    .task__list__container input {
+        font-size: 0.5rem;
+    }
+
+    .action__button_delete {
+        margin-left: 0rem;
+    }
+}
+</style>

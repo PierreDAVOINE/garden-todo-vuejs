@@ -14,23 +14,20 @@ const setModalIsOpen = (isSignUp: boolean) => {
 </script>
 
 <template>
-    <div className="my-space">
-        <div v-if="userState.isLogged">
-            <Garden />
-            <Todo />
-        </div>
-
-        <div className="my-space__not-connected">
-            <h2 className="my-space__not-connected-title">
-                Vous devez vous connecter pour accéder à votre jardin !
-            </h2>
-            <button className="my-space__not-connected-button" @click="setModalIsOpen(false)">
-                S'inscrire
-            </button>
-            <button className="my-space__not-connected-button" @click="setModalIsOpen(true)">
-                Se connecter
-            </button>
-        </div>
+    <div v-if="userState.isLogged" className="my-space">
+        <Garden />
+        <Todo />
+    </div>
+    <div v-else class="my-space my-space__not-connected">
+        <h2 class="my-space__not-connected-title">
+            Vous devez vous connecter pour accéder à votre jardin !
+        </h2>
+        <button class="my-space__not-connected-button" @click="setModalIsOpen(false)">
+            S'inscrire
+        </button>
+        <button class="my-space__not-connected-button" @click="setModalIsOpen(true)">
+            Se connecter
+        </button>
     </div>
 </template>
 

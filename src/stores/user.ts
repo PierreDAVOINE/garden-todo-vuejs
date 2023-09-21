@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { IUserData } from '../@types/user';
 import { axiosInstance } from '../utils/axios';
+import { PlantAllProps } from '../@types/plants';
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -27,6 +28,7 @@ export const useUserStore = defineStore('user', {
         city: '',
         email: '',
       },
+      hasPlant: [<PlantAllProps>{}],
     };
   },
   actions: {

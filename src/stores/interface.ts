@@ -15,6 +15,7 @@ export const useInterfaceStore = defineStore('interface', {
         password: false,
       },
       plantPage: <PlantAllProps>{},
+      isPlantModalOpen: false,
     };
   },
   actions: {
