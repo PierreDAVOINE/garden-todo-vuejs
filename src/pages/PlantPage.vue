@@ -235,9 +235,6 @@ const getPlantData = async () => {
     max-width: 100%;
     display: block;
     border-radius: 10px;
-    // max-width: 500px;
-    // max-height: 500px;
-
 }
 
 .desktop__fiche__plante__principale {
