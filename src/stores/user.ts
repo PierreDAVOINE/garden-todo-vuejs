@@ -28,7 +28,7 @@ export const useUserStore = defineStore('user', {
         city: '',
         email: '',
       },
-      hasPlant: [<PlantAllProps>{}],
+      hasPlant: [] as PlantAllProps[],
     };
   },
   actions: {
@@ -67,7 +67,6 @@ export const useUserStore = defineStore('user', {
       this.isLogged = value;
     },
     async getUserDataFromApi(userId: number) {
-      console.log('récupération du user. Son id est : ', userId);
       const response = await axiosInstance.get(`/users/${userId}`);
       this.setUserData({
         id: response.data[0].id,
@@ -75,6 +74,15 @@ export const useUserStore = defineStore('user', {
         city: response.data[0].city || '',
         email: response.data[0].email,
       });
+      const userPlants = await axiosInstance.get(`/garden/${userId}`);
+      if (userPlants.status !== 200) {
+        console.error('Une erreur est survenue : ', userPlants.data.message);
+        // userPlants.data.message
+        //   ? addNewNotification(response.data.message, true)
+        //   : addNewNotification('Une erreur est survenue', true);
+      } else {
+        this.hasPlant = userPlants.data;
+      }
     },
     setUserDataAccount(data: IUserData) {
       this.userFormDataAccount = {

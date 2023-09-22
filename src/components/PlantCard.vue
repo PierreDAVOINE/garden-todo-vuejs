@@ -20,8 +20,7 @@ defineProps({
         <!-- <Link to={`/plantes/${plant.slug_name}`} relative="path"> -->
         <router-link :to="'/plantes/' + plant.slug_name" relative="path">
             <picture>
-                <!-- <source srcSet={plant.url_image} media="(max-width: 840px)">
-                    </source> -->
+                <source :srcSet="plant.url_image" media="(max-width: 840px)">
                 <img :src="plant.url_image" :alt="plant.plant_name" :title="plant.plant_name" />
             </picture>
 

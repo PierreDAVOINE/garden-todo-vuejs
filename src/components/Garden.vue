@@ -15,9 +15,7 @@ const interfaceState = useInterfaceStore();
 
         <h2>Mon espace vert</h2>
 
-        <!-- {/* Si l'utilisateur est connecté ET n'a aucune plante */} -->
-        <!-- {isLogged && hasPlant.length === 0 && ( -->
-        <div v-if="userState.isLogged">
+        <div v-if="userState.hasPlant.length === 0">
             <p>
                 Oh non votre jardin est vide !
                 <Frown />
@@ -27,13 +25,9 @@ const interfaceState = useInterfaceStore();
             Ajouter une plante
             </Link>
         </div>
-        <div v-if="userState.isLogged" className="wrapper-plants">
-            <!-- {/* Si l'utilisateur est connecté ET a une ou des plantes */}
-            {isLogged &&
-            hasPlant &&
-            hasPlant.map((plant) => ( -->
-            <PlantCardGarden />
-
+        <div v-else className="wrapper-plants">
+            <!-- {/* Si l'utilisateur est connecté ET a une ou des plantes */} -->
+            <PlantCardGarden v-for="plant of userState.hasPlant" :plant="plant" />
         </div>
     </div>
 </template>
