@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { PlantAllProps } from '../@types/plants';
-import drops from '/img/drops.svg';
+import drops from '../assets/drops.svg';
 
 defineProps({
     plant: {
@@ -15,9 +15,9 @@ const isNeedWater = ref(false);
 </script>
 
 <template>
-    <div class="plant-card">
+    <div class="plant-card-garden">
         <span :class="{ droplets: isNeedWater, hide: !isNeedWater }">
-            <img src={{drops}} alt="Il est l'heure d'arroser !" title="Il est l'heure d'arroser !" />
+            <img :src="drops" alt="Il est l'heure d'arroser !" title="Il est l'heure d'arroser !" />
         </span>
 
         <picture>
@@ -40,66 +40,80 @@ const isNeedWater = ref(false);
 </template>
 
 <style scoped lang="scss">
-.garden {
-    .plant-card {
+.plant-card-garden {
+    background-color: rgb(235, 235, 235);
+    box-shadow: 1px 1px 3px 1px #9e9e9e;
+    transform: scale(1);
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 20rem;
+
+    img,
+    picture {
+        border-radius: 8px 8px 0 0;
+        width: 100%;
         height: auto;
-        padding-bottom: 1rem;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
-        h3 {
-            line-height: normal;
-            color: darkslategrey;
-        }
-
-        .wrapper-btn {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .garden-plant-btn {
-            background-color: #ffffff;
-            border: none;
-            color: #1b3b2c;
-            cursor: pointer;
-            margin: 0.5rem;
-            right: 0px;
-            bottom: 0px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border: 1px solid #1b3b2c;
-            border-radius: 8px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-align: center;
-            width: 160px;
-        }
-
-        .garden-plant-btn:hover {
-            fill: #6aca9f;
-            color: #6aca9f;
-            background-color: #1b3b2c;
-        }
-
-        .garden-plant-btn svg {
-            transform: scale(1.5);
-            fill: #ffffff;
-        }
-
-        span {
-            fill: #ffffff;
-            color: #6aca9f;
-        }
+        max-height: 320px;
+        object-fit: cover;
     }
 
-    .garden-plant-card-img {
-        height: 15rem;
+    h3 {
+        line-height: normal;
+        color: darkslategrey;
     }
 
-    .hide {
-        display: none;
+    &:hover,
+    &:focus {
+        transform: scale(1.04);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
+
+    .wrapper-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.5rem 0 1rem 0;
+    }
+
+    .garden-plant-btn {
+        background-color: #ffffff;
+        border: none;
+        color: #1b3b2c;
+        cursor: pointer;
+        margin: 0.5rem;
+        display: flex;
+        justify-content: center;
+        padding: 0.5rem 0.7rem;
+        border: 1px solid #1b3b2c;
+        border-radius: 8px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        width: 160px;
+    }
+
+    .garden-plant-btn:hover {
+        fill: #6aca9f;
+        color: #6aca9f;
+        background-color: #1b3b2c;
+    }
+
+    .garden-plant-btn svg {
+        transform: scale(1.5);
+        fill: #ffffff;
+    }
+
+    span {
+        fill: #ffffff;
+        color: #6aca9f;
+    }
+}
+
+.garden-plant-card-img {
+    height: 15rem;
+}
+
+.hide {
+    display: none;
 }
 </style>
