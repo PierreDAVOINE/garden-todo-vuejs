@@ -102,5 +102,45 @@ export const useUserStore = defineStore('user', {
         email: this.userFormDataAccount.email,
       };
     },
+    async deleteFromHasPlant(plant_id: number) {
+      const response = await axiosInstance.delete(
+        `/garden/${this.userData.id}/${plant_id}`
+      );
+      if (response.status !== 200) {
+        // response.data.message
+        //     ? addNewNotification(response.data.message, true)
+        //     : addNewNotification('Une erreur est survenue', true);
+        console.error(response.data.message);
+      } else {
+        //TODO: trouver un moyen pour que le jardin se refresh lors de la suppression d'une plante.
+
+        // const newPlants = this.hasPlant.filter((p) => p.id !== plant_id);
+        // this.hasPlant = newPlants;
+        // addNewNotification('La plante a bien été supprimée', false);
+
+        const index = this.hasPlant.findIndex((p) => p.id === plant_id);
+        if (index !== -1) {
+          this.hasPlant.splice(index, 1);
+        }
+      }
+    },
+    async addFromHasPLant(plant: PlantAllProps) {
+      const response = await axiosInstance.post(`/garden/${this.userData.id}`, {
+        plantId: plant.id,
+      });
+      if (response.status !== 200) {
+        // response.data.message
+        //   ? addNewNotification(response.data.message, true)
+        //   : addNewNotification('Une erreur est survenue', true);
+        console.error("Erreur lors de l'ajout : ", response.data.message);
+      } else {
+        const plantListFromUserGarden = [...this.hasPlant, response.data];
+        console.log("L'ajout de passe bien  : ", response.data);
+        this.hasPlant = plantListFromUserGarden;
+        // setHasPlant(plantListFromUserGarden);
+        // addNewNotification(`Plante ajoutée au jardin !`, false);
+        // setIsAddableToGarden(false);
+      }
+    },
   },
 });

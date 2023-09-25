@@ -2,6 +2,7 @@ import { TaskType } from './tasks';
 
 export interface PlantAllProps {
   id: number;
+  plant_id: number;
   plant_name: string;
   slug_name: string;
   latin_plant_name: string;
@@ -91,7 +92,6 @@ export interface GardenPropsType {
   userId: number;
   addNewNotification: (string: string, boolean: boolean) => void;
 }
-whichPlantProps;
 
 export interface SpacePropsType {
   setIsLogged: (value: boolean) => void;

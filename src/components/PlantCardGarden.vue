@@ -2,6 +2,13 @@
 import { ref } from 'vue';
 import { PlantAllProps } from '../@types/plants';
 import drops from '../assets/drops.svg';
+import { useUserStore } from '../stores/user';
+// import { useInterfaceStore } from '../stores/interface';
+
+const userState = useUserStore();
+// const interfaceState = useInterfaceStore();
+
+const isNeedWater = ref(false);
 
 defineProps({
     plant: {
@@ -9,8 +16,6 @@ defineProps({
         required: true
     },
 })
-
-const isNeedWater = ref(false);
 
 </script>
 
@@ -31,7 +36,8 @@ const isNeedWater = ref(false);
                 <!-- <Eye /> -->
                 CONSULTER
             </button>
-            <button class="garden-plant-btn" title="Supprimer une plante de mon jardin">
+            <button class="garden-plant-btn" title="Supprimer une plante de mon jardin"
+                @click="userState.deleteFromHasPlant(plant.plant_id)">
                 <!-- <MinusCircle /> -->
                 SUPPRIMER
             </button>

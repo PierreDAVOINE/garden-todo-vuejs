@@ -31,7 +31,8 @@ defineProps({
         </router-link>
 
         <!-- {isLogged && isAddableToGarden && ( -->
-        <button v-if="userState.isLogged" className="add-plant-btn" title="ajouter une plante à mon espace vert">
+        <button v-if="userState.isLogged" className="add-plant-btn" title="ajouter une plante à mon espace vert"
+            @click="userState.addFromHasPLant(plant)">
             AJOUTER À MON JARDIN
         </button>
 

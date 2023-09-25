@@ -18,12 +18,12 @@ const interfaceState = useInterfaceStore();
         <div v-if="userState.hasPlant.length === 0">
             <p>
                 Oh non votre jardin est vide !
-                <Frown />
+                <!-- <Frown /> -->
             </p>
-            <Link to="/plantes">
-            <PlusCircle />
-            Ajouter une plante
-            </Link>
+            <router-link to="/plantes">
+                <!-- <PlusCircle /> -->
+                Ajouter une plante
+            </router-link>
         </div>
         <div v-else className="wrapper-plants">
             <!-- {/* Si l'utilisateur est connecté ET a une ou des plantes */} -->
